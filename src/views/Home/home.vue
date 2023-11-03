@@ -1,6 +1,11 @@
 <script setup>
 import { ref } from "vue";
 import { showToast } from "vant";
+import lang from "../../components/lang.vue";
+import list from "@/components/list.vue";
+import { useMyStore } from "../../stores/myStore";
+
+const myStore = useMyStore()
 
 const listData = ref([
   {
@@ -53,14 +58,17 @@ const typeList = ref([
   },
 ]);
 
-const show = ref(false);
+
+let show = myStore.show
+
 const showPopup = () => {
-  show.value = true;
+  show = true;
 };
 
-const showLeft = ref(false);
+let showLeft = myStore.showLeft
+
 const showPopupLeft = () => {
-  showLeft.value = true;
+  showLeft = true;
 };
 </script>
 
@@ -75,14 +83,16 @@ const showPopupLeft = () => {
         position="left"
         :style="{ width: '50%', height: '100%' }"
       >
-        <div style="color: #000" class="list_left">123</div>
+        <div class="list_left">
+          <list />
+        </div>
       </van-popup>
       <span>首页</span>
       <span class="material-symbols-outlined" @click="showPopup">
         language
       </span>
       <van-popup v-model:show="show" position="top" :style="{ height: '30%' }">
-        <div style="color: #000" class="lang">123</div>
+        <div class="lang"><lang /></div>
       </van-popup>
     </div>
     <div class="banner">
@@ -183,6 +193,10 @@ const showPopupLeft = () => {
   }
   .notice {
     margin: 5px 0px;
+  }
+  .van-popup {
+    background: #102030;
+    padding: 15px;
   }
   .type {
     width: auto;

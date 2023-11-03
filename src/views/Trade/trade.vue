@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter()
 
 const deal = ref([
   {
@@ -21,9 +24,14 @@ const deal = ref([
 ]);
 
 const show = ref(false);
+
 const showPopup = () => {
   show.value = true;
 };
+
+const goChart = () =>{
+  router.push("/chart")
+}
 </script>
 
 <template>
@@ -37,7 +45,7 @@ const showPopup = () => {
         <span>交易</span>
       </div>
       <div class="right">
-        <span class="material-symbols-outlined"> signal_cellular_alt </span>
+        <span class="material-symbols-outlined" @click="goChart"> signal_cellular_alt </span>
       </div>
     </div>
     <van-popup

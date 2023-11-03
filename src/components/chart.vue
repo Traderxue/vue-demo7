@@ -1,17 +1,20 @@
 <script setup>
-import { onMounted
- } from "vue";
+import { onMounted, onUnmounted } from "vue";
 import { init, dispose } from "klinecharts";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
 let chart;
 const option = {
   // 网格线
   grid: {
     show: false,
   },
-}
+};
 
 onMounted(() => {
-    chart = init("chart");
+  chart = init("chart");
 
   // 为图表添加数据
   chart.applyNewData([
@@ -97,13 +100,108 @@ onMounted(() => {
     },
   ]);
 
-  chart.setStyles(option)
-  chart.createIndicator("VOL")
+  chart.setStyles(option);
+  chart.createIndicator("VOL");
 });
+
+const goBack = () => {
+  dispose("chart");
+  router.back();
+};
+
+const buy = () =>{
+  router.push("/trade")
+}
+
+const sell = () =>{
+  router.push("/trade")
+}
 </script>
 
 <template>
-    <div class="chart" id="chart" style="width: 100%; height: 500px;padding: 10px 0px;">
-
+  <div class="box">
+    <div class="header">
+      <span class="material-symbols-outlined arrow" @click="goBack">
+        arrow_back_ios
+      </span>
+      <span>BTC/USDT</span>
     </div>
+    <div class="banner">
+      <div style="color: #e23e57">
+        <span class="title">3242</span>
+        <span>0.18%</span>
+      </div>
+      <div>
+        <span>最高价</span>
+        <span>最低价</span>
+        <span>成交量</span>
+      </div>
+      <div style="color: #00adb5">
+        <span>32160</span>
+        <span>39161</span>
+        <span>162</span>
+      </div>
+    </div>
+    <div id="chart" style="width: 100%; height: 500px; padding: 10px 0px"></div>
+    <div class="btn">
+      <button class="buy" @click="buy">买入做多</button>
+      <button class="sell" @click="sell">卖出做空</button>
+    </div>
+  </div>
 </template>
+
+<style lang="scss" scoped>
+.box {
+  width: auto;
+  height: 100%;
+  padding: 15px;
+  background: #102030;
+  color: #fff;
+  .header {
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    position: relative;
+  }
+  .arrow {
+    position: absolute;
+    left: 0;
+  }
+  .banner {
+    width: auto;
+    height: 120px;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0px;
+    div {
+      display: flex;
+      justify-content: space-around;
+      flex-direction: column;
+      font-size: 15px;
+      .title {
+        font-size: 22px;
+      }
+    }
+  }
+  .btn{
+    margin-top: 30px;
+    width: auto;
+    height: 40px;
+    display: flex;
+    justify-content: space-around;
+    button{
+      width: 45%;
+      height: 40px;
+      border: 0;
+      border-radius: 2px;
+      font-size: 14px;
+    }
+    .buy{
+      background: #1CAD90;
+    }
+    .sell{
+      background: #FF5F56;
+    }
+  }
+}
+</style>
