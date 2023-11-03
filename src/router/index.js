@@ -10,6 +10,22 @@ const router = createRouter({
         {
           path:"",
           component:()=>import("@/views/Home/home.vue")
+        },
+        {
+          path:"/home",
+          component:()=>import("@/views/Home/home.vue")
+        },
+        {
+          path:"/trade",
+          component:()=>import("@/views/Trade/trade.vue")
+        },
+        {
+          path:"/wallet",
+          component:()=>import("@/views/Wallet/wallet.vue")
+        },
+        {
+          path:"/mine",
+          component:()=>import("@/views/Mine/mine.vue")
         }        
       ])
     }
