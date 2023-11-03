@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import chart from "../../components/chart.vue";
 
 const deal = ref([
   {
@@ -114,6 +113,7 @@ const showPopup = () => {
       align-items: center;
     }
     .mid {
+      font-size:16px;
       text-align: center;
     }
     .right {
