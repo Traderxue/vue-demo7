@@ -1,9 +1,11 @@
 <script setup>
 import { onMounted, onUnmounted } from "vue";
 import { init, dispose } from "klinecharts";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const router = useRouter();
+
+const route = useRoute()
 
 let chart;
 const option = {
@@ -12,6 +14,8 @@ const option = {
     show: false,
   },
 };
+
+const type = route.query._value
 
 onMounted(() => {
   chart = init("chart");
@@ -109,8 +113,15 @@ const goBack = () => {
   router.back();
 };
 
+onUnmounted(()=>{
+  dispose("chart");
+})
+
 const buy = () =>{
-  router.push("/trade")
+  router.push({
+    path:"/trade",
+    query:type
+  })
 }
 
 const sell = () =>{
@@ -124,7 +135,7 @@ const sell = () =>{
       <span class="material-symbols-outlined arrow" @click="goBack">
         arrow_back_ios
       </span>
-      <span>BTC/USDT</span>
+      <span>{{type}}/USDT</span>
     </div>
     <div class="banner">
       <div style="color: #e23e57">

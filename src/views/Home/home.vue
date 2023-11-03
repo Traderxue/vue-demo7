@@ -1,11 +1,10 @@
 <script setup>
 import { ref } from "vue";
 import { showToast } from "vant";
-import lang from "../../components/lang.vue";
 import list from "@/components/list.vue";
 import { useMyStore } from "../../stores/myStore";
 
-const myStore = useMyStore()
+const myStore = useMyStore();
 
 const listData = ref([
   {
@@ -58,18 +57,35 @@ const typeList = ref([
   },
 ]);
 
+const langList = ref([
+  {
+    lang: "zh",
+  },
+  {
+    lang: "zh_hk",
+  },
+  {
+    lang: "cn",
+  },
+]);
 
-let show = myStore.show
+const show = ref(false);
 
 const showPopup = () => {
-  show = true;
+  show.value = true;
 };
 
-let showLeft = myStore.showLeft
+const changeLang = (item)=>{
+  show.value = false
+}
+
+const showLeft = ref(false);
 
 const showPopupLeft = () => {
-  showLeft = true;
+  showLeft.value = true;
 };
+
+
 </script>
 
 <template>
@@ -92,7 +108,9 @@ const showPopupLeft = () => {
         language
       </span>
       <van-popup v-model:show="show" position="top" :style="{ height: '30%' }">
-        <div class="lang"><lang /></div>
+        <div class="lang">
+          <span v-for="(item,index) in langList" :key="index"  @click="changeLang(item)">{{item.lang}}</span>
+        </div>
       </van-popup>
     </div>
     <div class="banner">
@@ -180,6 +198,20 @@ const showPopupLeft = () => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    .lang {
+      width: auto;
+      height: 100%;
+      background: #102030;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-direction: column;
+      span {
+        padding: 10px 0px;
+      }
+      span:hover {
+      }
+    }
   }
   .banner {
     width: auto;

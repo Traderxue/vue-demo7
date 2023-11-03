@@ -1,8 +1,10 @@
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
-const router = useRouter()
+const router = useRouter();
+
+const route = useRoute()
 
 const deal = ref([
   {
@@ -23,14 +25,42 @@ const deal = ref([
   },
 ]);
 
+const listData = ref([
+  {
+    type: "BTC",
+  },
+  {
+    type: "ETH",
+  },
+  {
+    type: "DOGE",
+  },
+  {
+    type: "APE",
+  },
+  {
+    type: "SOL",
+  },
+]);
+
 const show = ref(false);
+
+const type = ref("BTC")
 
 const showPopup = () => {
   show.value = true;
 };
 
-const goChart = () =>{
-  router.push("/chart")
+const goChart = () => {
+  router.push({
+    path:"/chart",
+    query:type
+  });
+};
+
+const changeTab = (item) =>{
+  type.value = item.type
+  show.value = false
 }
 </script>
 
@@ -39,21 +69,29 @@ const goChart = () =>{
     <div class="header">
       <div class="left" @click="showPopup">
         <span class="material-symbols-outlined"> menu </span>
-        <span>BTC/USDT</span>
+        <span>{{type}}/USDT</span>
       </div>
       <div class="mid">
         <span>交易</span>
       </div>
       <div class="right">
-        <span class="material-symbols-outlined" @click="goChart"> signal_cellular_alt </span>
+        <span class="material-symbols-outlined" @click="goChart">
+          signal_cellular_alt
+        </span>
       </div>
     </div>
     <van-popup
       v-model:show="show"
       position="left"
       :style="{ width: '50%', height: '100%' }"
-      >内容</van-popup
     >
+      <div class="list">
+        <span v-for="(item, index) in listData" :key="index"
+        @click="changeTab(item)"
+          >{{ item.type }}/USDT</span
+        >
+      </div>
+    </van-popup>
     <div class="box">
       <div class="left">
         <div class="btn">
@@ -71,7 +109,7 @@ const goChart = () =>{
           <van-stepper v-model="value" step="1000" min="1" max="10000000" />
         </div>
         <div class="buy_btn">
-          <button>买入BTC</button>
+          <button>买入{{type}}</button>
         </div>
       </div>
       <div class="right">
@@ -90,13 +128,13 @@ const goChart = () =>{
       <div class="title">
         <span class="entrust">当前委托(0)</span>
         <div>
-            <span class="material-symbols-outlined"> feed </span>
-            <span>全部</span>
+          <span class="material-symbols-outlined"> feed </span>
+          <span>全部</span>
         </div>
       </div>
       <div class="main">
         <div class="main_box">
-            <van-empty description="暂无委托" />
+          <van-empty description="暂无委托" />
         </div>
       </div>
     </div>
@@ -121,7 +159,7 @@ const goChart = () =>{
       align-items: center;
     }
     .mid {
-      font-size:16px;
+      font-size: 16px;
       text-align: center;
     }
     .right {
@@ -217,19 +255,33 @@ const goChart = () =>{
   .position {
     width: auto;
     height: auto;
-    .title{
+    .title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .entrust {
+        font-weight: 600;
+        font-size: 15px;
+      }
+      div {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        .entrust{
-            font-weight: 600;
-            font-size: 15px;
-        }
-        div{
-            display: flex;
-            justify-content: space-around;
-            font-size: 15px;
-        }
+        justify-content: space-around;
+        font-size: 15px;
+      }
+    }
+  }
+  .van-popup {
+    background: #102030;
+    padding: 15px 0px;
+    .list {
+      padding: 40px 0px;
+      text-align: center;
+      span {
+        display: inline-block;
+        width: 100%;
+        padding: 15px 0px;
+        font-size: 15px;
+      }
     }
   }
 }
