@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { showToast } from "vant";
 import list from "@/components/list.vue";
 import { useMyStore } from "../../stores/myStore";
+import i18n from "@/lang/index.js";
 
 const myStore = useMyStore();
 
@@ -65,7 +66,7 @@ const langList = ref([
     lang: "zh_hk",
   },
   {
-    lang: "cn",
+    lang: "en",
   },
 ]);
 
@@ -76,6 +77,7 @@ const showPopup = () => {
 };
 
 const changeLang = (item)=>{
+  i18n.global.locale = item
   show.value = false
 }
 
@@ -103,7 +105,7 @@ const showPopupLeft = () => {
           <list />
         </div>
       </van-popup>
-      <span>首页</span>
+      <span>{{$t('home.title')}}</span>
       <span class="material-symbols-outlined" @click="showPopup">
         language
       </span>
