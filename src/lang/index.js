@@ -6,6 +6,7 @@ import en from "./en.js"
 
 const i18n = createI18n({
     locale:"zh",
+    globalInjection:true,
     messages:{
         zh,
         zh_hk,
