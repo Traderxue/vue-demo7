@@ -77,12 +77,11 @@ const showPopup = () => {
 };
 
 const changeLang = (item)=>{
-  i18n.global.locale = item
+  i18n.global.loacle =item
   show.value = false
 }
 
 const showLeft = ref(false);
-
 const showPopupLeft = () => {
   showLeft.value = true;
 };
