@@ -1,5 +1,9 @@
 <script setup>
 import { ref } from "vue";
+import coins from "./components/coins.vue";
+import fait from "./components/fait.vue";
+import deposit from "./components/deposit.vue";
+import contract from "./components/contract.vue";
 
 const active = ref(1);
 </script>
@@ -36,10 +40,10 @@ const active = ref(1);
         title-active-color="#1989fa"
         color="#1989fa"
       >
-        <van-tab title="币币">币币</van-tab>
-        <van-tab title="合约">合约</van-tab>
-        <van-tab title="法币">法币</van-tab>
-        <van-tab title="充提">充提</van-tab>
+        <van-tab title="币币"><coins/></van-tab>
+        <van-tab title="合约"><contract/></van-tab>
+        <van-tab title="法币"><fait/></van-tab>
+        <van-tab title="充提"><deposit/></van-tab>
       </van-tabs>
     </div>
   </div>
